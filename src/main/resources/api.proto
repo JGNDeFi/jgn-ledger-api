@@ -1,0 +1,192 @@
+// protoc -I=. --java_out=../java/ api.proto
+
+syntax = "proto2";
+
+package org.jgn.api.proto;
+
+option java_package = "org.jgn.api.proto";
+option java_outer_classname = "ApiProto";
+
+message Deposit {
+	required int32 amount = 1;
+	required string userId = 2;
+	required string STOName = 3;
+}
+
+message Withdraw {
+	required int32 amount = 1;
+	required string userId = 2;
+	required string STOName = 3;
+}
+
+message CreateAccount {
+	required string name = 1;
+}
+
+message Node {
+	optional NodeId nodeId = 1;
+	
+	enum NodeId {
+		NOTARY = 0;
+		TRUSTEE = 1;
+		JGN = 2;
+		APPLE_TRUST = 3;
+	}
+}
+
+message GetBalance {
+	optional string account = 1;
+	optional string symbol = 2;
+}
+
+message Transfer {
+	required string fromAccount = 1;
+	required string toAccount = 2;
+	required int32 amount = 3;
+	required string symbol = 4;
+}
+
+message STOInfo {
+	required string name = 1;
+}
+
+message GetAccountUUIDByName {
+	required string name = 1;
+}
+
+message Request {
+	required RequestHeader header = 1;
+	required RequestBody body = 2;
+}
+
+message RequestHeader {
+	required string version = 1;
+	required RequestMethod method = 2;
+	required RequestType type = 3;
+	optional string authentication = 4;
+
+	enum RequestMethod {
+		GET = 0;
+		POST = 1;
+		PUT = 2;
+		PATCH = 3;
+		DELETE = 4;
+		COPY = 5;
+		HEAD = 6;
+		OPTIONS = 7;
+		LINK = 8;
+		UNLINK = 9;
+		PURGE = 10;
+		LOCK = 11;
+		UNLOCK = 12;
+		PROPFIND = 13;
+		VIEW = 14;
+	}
+
+	enum RequestType {
+		DEPOSIT = 0;
+		WITHDRAW = 1;
+		CREATE_ACCOUNT = 2;
+		GET_BALANCE = 3;
+		TRANSFER = 4;
+		GET_STOS = 5;
+		GET_STO_INFO = 6;
+		GET_ONE_ACCOUNT_IN_NODE = 7;
+		GET_UUID_BY_NAME = 8;
+	}
+}
+
+message RequestBody {
+	optional Deposit deposit = 1;
+	optional Withdraw withdraw = 2;
+	optional CreateAccount createAccount = 3;
+	optional GetBalance getBalance = 4;
+	optional Transfer transfer = 5;
+	optional STOInfo stoInfo = 6;
+	optional Node nodeInfo = 7;
+	optional GetAccountUUIDByName getUUIDbyName = 8;
+}
+
+message Response {
+	required ResponseHeader header = 1;
+	optional ResponseBody body = 2;
+}
+
+message ResponseHeader {
+	required string version = 1;
+	required ResponseStatus status = 2;
+	optional ResponseType type = 3;
+	optional string message = 4;
+
+	enum ResponseType {
+		DEPOSIT = 0;
+		WITHDRAW = 1;
+		CREATE_ACCOUNT = 2;
+		GET_BALANCE = 3;
+		TRANSFER = 4;
+		GET_STOS = 5;
+		GET_STO_INFO = 6;
+		GET_ONE_ACCOUNT_IN_NODE = 7;
+		GET_UUID_BY_NAME = 8;
+	}
+	
+	enum ResponseStatus {
+		ERROR = 0;
+		OK = 1;
+	}
+}
+
+message ResponseBody {
+	optional RespDeposit deposit = 1;
+	optional RespWithdraw withdraw = 2;
+	optional RespCreateAccount createAccount = 3;
+	optional RespGetBalance getBalance = 4;
+	optional RespTransfer transfer = 5;
+	optional RespGetSTOs stos = 6;
+	optional RespSTOInfo stoInfo = 7;
+	optional RespGetOneAccountInNode accUUID = 8;
+	optional RespGetAccountUUIDByName getUUIDbyName = 9;
+}
+
+message RespDeposit {
+	required string message = 1;
+}
+
+message RespWithdraw {
+	required string message = 1;
+}
+
+
+message RespCreateAccount {
+	required string uuId = 1;
+}
+
+message RespGetOneAccountInNode {
+	required string uuId = 1;
+}
+
+message RespGetBalance {
+	required int32 amount = 1;
+	
+}
+
+message RespTransfer {
+	required string txId = 1;
+}
+
+message RespGetSTOs {
+	repeated string sto = 1;
+}
+
+message RespGetAccountUUIDByName{
+	required string uuid = 1;
+}
+
+message RespSTOInfo {
+	required string ame = 1;
+	required string issuer = 2;
+	required int32 totalSupply = 3;
+	required int32 precesion = 4;
+	required string category = 5;
+}
+

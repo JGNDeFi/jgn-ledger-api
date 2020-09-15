@@ -1,0 +1,25 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  api:
+    image: openjdk:8
+    volumes:
+      - /var/apps/ledger-api:/app
+    working_dir: /app
+    network_mode: "host"
+    command: java -jar ledger-api.jar
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

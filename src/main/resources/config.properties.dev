@@ -1,0 +1,16 @@
+#Corda Nodes List
+cordaNodeNames = jgnRPCOperations,appleRPCOperations,trusteeRPCOperations
+
+#Corda Node Config
+#format: nodeName = ID,IP_ADDRESS,PORT,USERNAME,PASSWORD
+notaryRPCOperations = 0,127.0.0.1,10003,corda,portal_password
+trusteeRPCOperations = 1,127.0.0.1,10012,user1,test
+jgnRPCOperations = 2,127.0.0.1,10006,user1,test
+appleRPCOperations = 3,127.0.0.1,10009,user1,test
+
+
+
+# ZeroMQ
+zeroMQProtocol = tcp
+zeroMQHost = 0.0.0.0
+zeroMQPort = 5555
